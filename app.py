@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 import mysql.connector
 
 app = Flask(__name__)
+CORS(app)  # Allow all domains (for dev)
 
 # Database configuration
 db_config = {
@@ -9,10 +11,9 @@ db_config = {
     'user': 'root',
     'password': 'rudraaws295',
     'database': 'std',
-    'port' : 3306
+    'port': 3306
 }
 
-# Home page: Registration form
 @app.route('/api', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -37,8 +38,20 @@ def register():
         cursor.close()
         conn.close()
 
-        return 'Student Registered Successfully!'
-    return 'index.html'
+        return jsonify({"message": "Student Registered Successfully!"})
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    # GET request
+    conn = mysql.connector.connect(**db_config)
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM students")
+    students = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return jsonify(students)
+
+
+# if __name__ == '__main__':
+#     app.run(host='0.0.0.0', port=8000)
