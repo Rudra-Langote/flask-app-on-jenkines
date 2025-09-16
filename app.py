@@ -13,7 +13,7 @@ db_config = {
 }
 
 # Home page: Registration form
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/api', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         name = request.form['name']
