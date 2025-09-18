@@ -21,7 +21,7 @@
 <body>
   <div class="container">
     <h2>Student Registration Form</h2>
-    <form method="POST" action="http://54.90.183.43:8000/api">
+    <form method="POST" action="http://3.80.121.36:8000/api">
       <label for="name">Full Name:</label>
 
       <input type="text" id="name" name="name" required>
@@ -68,7 +68,7 @@
 
   <script>
     async function loadStudents() {
-      const res = await fetch("http://54.90.183.43:8000/api");
+      const res = await fetch("http://3.80.121.36:8000/api");
       const data = await res.json();
       console.log(data);
       const tableBody = document.querySelector("#studentsTable tbody");
